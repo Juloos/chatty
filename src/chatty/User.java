@@ -567,6 +567,27 @@ public class User implements Comparable<User> {
         }
         return new ArrayList<>(lines);
     }
+
+    public boolean hasAlreadyPlayedBingo(String compareMsg, long timeframe, char[] ignoredChars) {
+        compareMsg = StringUtil.prepareForSimilarityComparison(compareMsg, ignoredChars);
+        if (lines == null || !compareMsg.matches("\\d+")) {
+            return false;
+        }
+        long checkUntilTime = System.currentTimeMillis() - timeframe * 1000;
+        for (int i = lines.size() - 1; i >= 0; i--) {
+            Message m = lines.get(i);
+            if (m instanceof TextMessage) {
+                TextMessage msg = (TextMessage) m;
+                if (msg.getTime() < checkUntilTime) {
+                    break;
+                }
+                if (msg.text.matches("\\d+")) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
     
     public synchronized int getNumberOfSimilarChatMessages(String compareMsg, int method, long timeframe, float minSimilarity, int minLen, char[] ignoredChars) {
         if (lines == null) {

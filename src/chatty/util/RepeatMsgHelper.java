@@ -15,6 +15,7 @@ import chatty.util.settings.Settings;
 public class RepeatMsgHelper {
     
     private static final String TAGS_KEY = "chatty-repeatmsg-count";
+    private static final String TAGS_KEY2 = "chatty-repeatbingo";
 
     private final Settings settings;
     
@@ -47,6 +48,9 @@ public class RepeatMsgHelper {
      * @return 
      */
     public MsgTags check(User user, User localUser, String text, MsgTags tags) {
+        if (user.hasAlreadyPlayedBingo(text, time, ignoredChars)) {
+            tags = MsgTags.addTag(tags, TAGS_KEY2, "true");
+        }
         if (matcher == null) {
             return tags;
         }

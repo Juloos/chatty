@@ -1086,6 +1086,15 @@ public class Highlighter {
                         else if (part.equals("historic2")) {
                             matchHistoric = true;
                         }
+                        else if (part.equals("repeatedbingo")) {
+                            matchItems.add(new Item("Repeated Bingo Message", null, true) {
+
+                                @Override
+                                public boolean matches(Type type, String text, int msgStart, int msgEnd, Blacklist blacklist, String channel, Addressbook ab, User user, User localUser, MsgTags tags) {
+                                    return tags != null && tags.get("chatty-repeatbingo") != null;
+                                }
+                            });
+                        }
                         else if (part.startsWith("repeatedmsg")) {
 //                            String options = parsePrefix(item, "repeatmsg:");
 //                            String[] split = options.split("/");

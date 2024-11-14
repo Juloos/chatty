@@ -568,12 +568,12 @@ public class User implements Comparable<User> {
         return new ArrayList<>(lines);
     }
 
-    public boolean hasAlreadyPlayedBingo(String compareMsg, long timeframe, char[] ignoredChars) {
+    public boolean hasAlreadyPlayedBingo(String compareMsg, char[] ignoredChars) {
         compareMsg = StringUtil.prepareForSimilarityComparison(compareMsg, ignoredChars);
-        if (lines == null || !compareMsg.matches("\\d+")) {
+        if (lines == null || !compareMsg.matches("\\d+" ) || compareMsg.matches("[12]")) {
             return false;
         }
-        long checkUntilTime = System.currentTimeMillis() - timeframe * 1000;
+        long checkUntilTime = System.currentTimeMillis() - 10 * 60 * 1000;  // 10 minutes
         for (int i = lines.size() - 1; i >= 0; i--) {
             Message m = lines.get(i);
             if (m instanceof TextMessage) {

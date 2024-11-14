@@ -48,7 +48,7 @@ public class RepeatMsgHelper {
      * @return 
      */
     public MsgTags check(User user, User localUser, String text, MsgTags tags) {
-        if (user.hasAlreadyPlayedBingo(text, time, ignoredChars)) {
+        if (user.hasAlreadyPlayedBingo(text, ignoredChars)) {
             tags = MsgTags.addTag(tags, TAGS_KEY2, "true");
         }
         if (matcher == null) {
